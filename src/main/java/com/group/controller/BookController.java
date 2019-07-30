@@ -1,4 +1,4 @@
 package com.group.controller;
 
-public class tempcontroller {
+public class BookController {
 }

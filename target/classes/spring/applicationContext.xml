@@ -30,19 +30,31 @@
         <!-- 注入数据库连接池 -->
         <property name="dataSource" ref="dataSource"/>
         <!-- 扫描bean包 使用别名 -->
-        <property name="typeAliasesPackage" value="com.group.entity"></property>
+        <property name="typeAliasesPackage" value="com.group.entity"/>
 
-        <!--配置加载映射文件 UserMapper.xml-->
-        <!--配置加载映射文件 UserMapper.xml-->
+       <!-- 配置加载映射文件 UserMapper.xml
+        配置加载映射文件 UserMapper.xml-->
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
-
+        <!-- 配置查询分页 -->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <!--使用下面的方式配置参数，一行配置一个 -->
+                        <value>
+                            helperDialect=mysql
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
     </bean>
 
     <!-- 自动生成dao,mapper-->
     <!--置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!-- 给出需要扫描Dao接口包 -->
-        <property name="basePackage" value="com.whut.dao"/>
+        <property name="basePackage" value="com.group.dao"/>
         <!-- 注入sqlSessionFactory -->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
@@ -58,7 +70,8 @@
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
     <!-- 6.开启事务注解-->
-    <tx:annotation-driven></tx:annotation-driven>
+    <tx:annotation-driven/>
 
 </beans>
